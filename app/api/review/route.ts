@@ -44,7 +44,6 @@ export async function POST(request: Request) {
     await db.insert(reviews).values({
       product,
       buyer: session.user.id,
-      //   buyer,
       rating,
       review: review?.trim(),
     });
