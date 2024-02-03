@@ -6,17 +6,27 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "drizzle-kit generate:pg",
+    "push:pg": "drizzle-kit push:pg",
+    "studio": "drizzle-kit studio --verbose"
   },
   "dependencies": {
+    "@auth/core": "^0.25.0",
+    "@auth/drizzle-adapter": "^0.5.0",
+    "drizzle-orm": "^0.29.3",
+    "next": "14.1.0",
+    "next-auth": "^4.24.5",
+    "pg": "^8.11.3",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.1.0"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
+    "@types/pg": "^8.11.0",
     "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@types/react-dom": "^18",
+    "drizzle-kit": "^0.20.14",
+    "typescript": "^5"
   }
 }
