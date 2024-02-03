@@ -18,3 +18,10 @@
 .open{
     width:40%;
 }
+
+/* chatHandler */
+.chatHandler{
+    position:absolute;
+    bottom:0;
+    right:20px;
+}

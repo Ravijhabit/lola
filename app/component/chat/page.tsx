@@ -2,19 +2,14 @@
 import { useCallback } from "react";
 import Talk from "talkjs";
 import { Session, Chatbox } from "@talkjs/react";
+import styles from './chat.module.css';
+import { Users } from "../constant";
 
-function ChatComponent() {
+function ChatComponent({sellerId}:{sellerId: string}) {
   const syncUser = useCallback(
     () =>
     // this is the user - hence data should be coming from seller
-      new Talk.User({
-        id: "nina",
-        name: "Nina",
-        email: "nina@example.com",
-        photoUrl: "https://talkjs.com/new-web/avatar-7.jpg",
-        welcomeMessage: "Hsaaaaaafsasi!",
-        role: "default",
-      }),
+      new Talk.User(Users[0]),
     [],
   );
 
@@ -22,14 +17,7 @@ function ChatComponent() {
     // JavaScript SDK code here
     const conversation = session.getOrCreateConversation("welcome");
     // need to map another with the seller.
-    const other = new Talk.User({
-      id: "frank",
-      name: "Frank",
-      email: "frank@example.com",
-      photoUrl: "https://talkjs.com/new-web/avatar-8.jpg",
-      welcomeMessage: "Hey, how can I help?",
-      role: "default",
-    });
+    const other = new Talk.User(Users[1]);
     conversation.setParticipant(session.me);
     conversation.setParticipant(other);
 
@@ -37,7 +25,7 @@ function ChatComponent() {
   }, []);
 
   return (
-    <Session appId="tbfixmcv" syncUser={syncUser}>
+    <Session appId="tbfixmcv" syncUser={syncUser} >
       <Chatbox
         syncConversation={syncConversation}
         style={{ width: "100%", height: "500px" }}
