@@ -35,16 +35,15 @@ export async function POST(request: Request) {
         { status: 404 }
       );
 
-    if (rating < 0.5 || rating > 5)
+    if (rating < 0 || rating > 5)
       return NextResponse.json(
-        { message: "Rating should be between 0.5 and 5", success: false },
+        { message: "Rating should be between 0 and 5", success: false },
         { status: 422 }
       );
 
     await db.insert(reviews).values({
       product,
       buyer: session.user.id,
-      //   buyer,
       rating,
       review: review?.trim(),
     });

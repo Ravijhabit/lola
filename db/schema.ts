@@ -84,7 +84,7 @@ export const products = pgTable("product", {
   type: typeEnum("type").notNull(),
   tag: tagEnum("tag").notNull(),
   seller: text("seller")
-    .references(() => users.id)
+    .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
 });
 
@@ -94,10 +94,10 @@ export const history = pgTable("history", {
     .primaryKey()
     .$defaultFn(() => createId()),
   product: text("product")
-    .references(() => products.id)
+    .references(() => products.id, { onDelete: "cascade" })
     .notNull(),
   buyer: text("buyer")
-    .references(() => users.id)
+    .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
 });
 
@@ -107,11 +107,11 @@ export const reviews = pgTable("review", {
     .primaryKey()
     .$defaultFn(() => createId()),
   product: text("product")
-    .references(() => products.id)
+    .references(() => products.id, { onDelete: "cascade" })
     .notNull(),
   buyer: text("buyer")
-    .references(() => users.id)
+    .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
-  rating: integer("rating").default(0.5),
+  rating: integer("rating").default(0),
   review: text("review").notNull(),
 });

@@ -1,7 +1,7 @@
 "use client";
-import { useForm, SubmitHandler } from "react-hook-form";
+
 import axios from "axios";
-import { ratingErrorMessage } from "@/app/constant";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type ReviewInputs = {
   rating: number;
@@ -9,24 +9,20 @@ type ReviewInputs = {
 };
 
 // reviewRating
-export default function ReviewRating({id}) {
-  
+const ReviewRating = ({ id }: { id: string }) => {
   const {
     register,
     handleSubmit,
-    // watch,
     formState: { errors },
   } = useForm<ReviewInputs>();
+
   const onSubmit: SubmitHandler<ReviewInputs> = (data) => {
     axios
       .post("/api/review", {
         ...data,
-        id: id
+        product: id,
       })
-      .then(function (response) {
-        console.log("positive response: ", response);
-      })
-      .catch(function (error) {
+      .catch((error) => {
         console.log("negative response: ", error);
       });
   };
@@ -53,14 +49,18 @@ export default function ReviewRating({id}) {
         rows={5}
         cols={33}
         {...register("review", {
-          minLength: 1,
-          maxLength: 200,
+          minLength: { value: 2, message: "Minimum length should be 2" },
+          maxLength: { value: 200, message: "Maximum length should be 200" },
+          required: {
+            value: true,
+            message: "This field is required",
+          },
         })}
       />
-      {errors.review && (
-        <span>{ratingErrorMessage[errors.review.type]}</span>
-      )}
+      {errors.review?.message ? <span>{errors.review?.message}</span> : null}
       <input type="submit" />
     </form>
   );
-}
+};
+
+export default ReviewRating;

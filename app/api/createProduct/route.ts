@@ -22,17 +22,17 @@ export async function POST(request: Request) {
     const data = await request.json();
 
     // TODO: image upload and store
-    const { name, description, price, type, tag, seller } = data;
+    const { name, description, price, type, tag, image } = data;
 
     const returned = await db
       .insert(products)
       .values({
         name,
         description,
+        image,
         price,
         type,
         seller: session.user.id,
-        // seller,
         tag,
       })
       .returning({ id: products.id });
