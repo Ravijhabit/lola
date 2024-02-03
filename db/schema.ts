@@ -1,8 +1,11 @@
 import type { AdapterAccount } from "@auth/core/adapters";
 import {
+  date,
   integer,
+  pgEnum,
   pgTable,
   primaryKey,
+  serial,
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
@@ -57,3 +60,27 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   })
 );
+
+export const typeEnum = pgEnum("type", ["rent", "trade"]);
+export const tagEnum = pgEnum("tag", [
+  "games",
+  "electronics",
+  "clothing",
+  "books",
+  "furniture",
+]);
+
+export const products = pgTable("product", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  price: integer("price").notNull(),
+  description: text("description").notNull(),
+  image: text("image"),
+  // numberOfRatings: integer("numberOfRatings").notNull(),
+  rentedTill: date("rentedTill", { mode: "date" }), // TODO: Considering all users are from Bharat. Need to handle timezones
+  type: typeEnum("type").notNull(),
+  tag: tagEnum("tag").notNull(),
+  seller: text("seller")
+    .references(() => users.id)
+    .notNull(),
+});
