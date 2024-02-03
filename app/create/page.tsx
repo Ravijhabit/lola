@@ -68,8 +68,8 @@ export default function App() {
       <UploadButton
         endpoint="imageUploader"
         onClientUploadComplete={(res: unknown) => {
-          setImageFile(res[0].name);
-          setImage(res[0].url);
+          setImageFile(res[0]?.name);
+          setImage(res[0]?.url);
           setImageError(false);
         }}
         onUploadError={(error: Error) => {
