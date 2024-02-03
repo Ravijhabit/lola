@@ -1,0 +1,20 @@
+/* individual product styles */
+.flex{
+    display: flex;
+    width:100vw;
+    height: 100vh;
+}
+.heroImage{
+    flex: 1
+}
+.productDetails{
+    position: absolute;
+    right: 1.5rem;
+    top:50%;
+}
+.selected{
+    min-height:100px
+}
+.open{
+    width:40%;
+}
