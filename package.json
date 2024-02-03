@@ -15,6 +15,7 @@
     "@auth/core": "^0.25.0",
     "@auth/drizzle-adapter": "^0.5.0",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@talkjs/react": "^0.1.5",
     "@uploadthing/react": "^6.2.2",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
