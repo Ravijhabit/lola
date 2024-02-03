@@ -1,6 +1,7 @@
 "use client";
 
 import { UploadButton } from "@uploadthing/react";
+import "@uploadthing/react/styles.css";
 import axios from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -28,6 +29,7 @@ type ProductInputs = {
 
 export default function App() {
   const [image, setImage] = useState<string>("");
+  const [imageFile, setImageFile] = useState<string>("");
   const [imageError, setImageError] = useState<boolean>(false);
 
   const {
@@ -66,6 +68,7 @@ export default function App() {
       <UploadButton
         endpoint="imageUploader"
         onClientUploadComplete={(res: unknown) => {
+          setImageFile(res[0].name);
           setImage(res[0].url);
           setImageError(false);
         }}
@@ -74,6 +77,8 @@ export default function App() {
           console.error("Error uploading image", error);
         }}
       />
+      {image && <img src={image} alt="item" style={{ height: "100px" }} />}
+      {imageFile && <p>{imageFile}</p>}
       {imageError && <span>Image is required</span>}
 
       {/* description of the item */}
