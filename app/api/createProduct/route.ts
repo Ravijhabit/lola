@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       description,
       price,
       type,
-      seller,
+      seller: session.user.id,
       tag,
     });
 
