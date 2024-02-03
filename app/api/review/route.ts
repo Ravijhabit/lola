@@ -1,5 +1,6 @@
 import db from "@/db";
-import { products } from "@/db/schema";
+import { products, reviews } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
@@ -22,24 +23,34 @@ export async function POST(request: Request) {
     const data = await request.json();
 
     // TODO: image upload and store
-    const { name, description, price, type, tag, seller } = data;
+    const { product, rating, review } = data;
 
-    const returned = await db
-      .insert(products)
-      .values({
-        name,
-        description,
-        price,
-        type,
-        seller: session.user.id,
-        // seller,
-        tag,
-      })
-      .returning({ id: products.id });
+    const productExists = await db.query.products.findFirst({
+      where: eq(products.id, product),
+    });
+
+    if (!productExists)
+      return NextResponse.json(
+        { message: "Product does not exist", success: false },
+        { status: 404 }
+      );
+
+    if (rating < 0.5 || rating > 5)
+      return NextResponse.json(
+        { message: "Rating should be between 0.5 and 5", success: false },
+        { status: 422 }
+      );
+
+    await db.insert(reviews).values({
+      product,
+      buyer: session.user.id,
+      //   buyer,
+      rating,
+      review: review?.trim(),
+    });
 
     return NextResponse.json({
-      productId: returned[0].id,
-      message: "Product added",
+      message: "Review added",
       success: true,
     });
   } catch (e: unknown) {

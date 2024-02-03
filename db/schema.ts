@@ -1,11 +1,11 @@
 import type { AdapterAccount } from "@auth/core/adapters";
+import { createId } from "@paralleldrive/cuid2";
 import {
   date,
   integer,
   pgEnum,
   pgTable,
   primaryKey,
-  serial,
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
@@ -71,7 +71,10 @@ export const tagEnum = pgEnum("tag", [
 ]);
 
 export const products = pgTable("product", {
-  id: serial("id").primaryKey(),
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
   name: text("name").notNull(),
   price: integer("price").notNull(),
   description: text("description").notNull(),
@@ -83,4 +86,32 @@ export const products = pgTable("product", {
   seller: text("seller")
     .references(() => users.id)
     .notNull(),
+});
+
+export const history = pgTable("history", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  product: text("product")
+    .references(() => products.id)
+    .notNull(),
+  buyer: text("buyer")
+    .references(() => users.id)
+    .notNull(),
+});
+
+export const reviews = pgTable("review", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  product: text("product")
+    .references(() => products.id)
+    .notNull(),
+  buyer: text("buyer")
+    .references(() => users.id)
+    .notNull(),
+  rating: integer("rating").default(0.5),
+  review: text("review").notNull(),
 });
