@@ -33,3 +33,8 @@ export const ItemLists = [
       type:'rental'
     }
   ]
+
+export const ratingErrorMessage = {
+  maxLength: "You can find shorter feedback for the same",
+  minLength: "This product deserves atleast a word",
+}

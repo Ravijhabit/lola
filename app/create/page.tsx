@@ -17,7 +17,7 @@ enum enumTag {
   electronics = "electronics",
 }
 
-type Inputs = {
+type ProductInputs = {
   name: string;
   image: string;
   description: string;
@@ -34,8 +34,8 @@ export default function App() {
     handleSubmit,
     // watch,
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  } = useForm<ProductInputs>();
+  const onSubmit: SubmitHandler<ProductInputs> = (data) => {
     axios.post('/api/createProduct', {
       ...data
     })

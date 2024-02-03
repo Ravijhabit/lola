@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import {ItemLists} from '../../constant'
 import { HiMiniMinusCircle } from "react-icons/hi2";
+import ReviewRating from './ReviewRating';
 import styles from './page.module.css'
 export interface IAppProps {
     params: {id: string}
@@ -32,6 +33,7 @@ export default function page (props: IAppProps) {
       </section>
       {/* <h1>{`Name is ${props.params.id}`}</h1>
       {ItemLists.filter((item)=>item.id ===props.params.id).map((filteredItem)=><h1>{filteredItem.name}</h1>)} */}
+      <ReviewRating id={props.params.id}/>
     </section>
   )
 }
