@@ -1,36 +1,43 @@
+import Item from "@/app/component/Item";
+import db from "@/db";
+import { products, users } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import Image from "next/image";
 import styles from "./profile.module.css";
+
 export interface ProfileProps {
-	params: { id: string };
+  params: { user: string };
 }
-export default function Profile(props: ProfileProps) {
-	// name
-	// email
-	// all the products
-	// products bought
-	// products sold
-	const stub = {
-		name: "SUru",
-        image:' ',
-		email: "hi@anandSUr.com"
-	};
-	return (
-		<section className={styles.container}>
-            {/* Profile Image */}
-            <img className={styles.profileImg} src={stub.image} alt="dummyImage"/>
-			<div className={styles.title}>
-				<div className={styles.value}>{stub.name}</div>
-			</div>
-			<div className={styles.title}>
-				<div className={styles.value}>{stub.email}</div>
-			</div>
-			{/* <div className={styles.transactions}>
-                <h4>Transaction History</h4>
-				<div className={styles.value}>
-					{stub.products.map((item) => 
-						<h1>{item}</h1>
-					)}
-				</div>
-			</div> */}
-		</section>
-	);
+export default async function Profile(props: ProfileProps) {
+  const user = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, props.params.user));
+
+  const allProducts = await db
+    .select()
+    .from(products)
+    .where(eq(products.seller, user[0].id));
+
+  return (
+    <section className={styles.container}>
+      <Image
+        src={user[0].image}
+        alt={user[0].name}
+        width={100}
+        height={100}
+        className="rounded-full"
+      />
+      <div className={styles.title}>
+        <div className={styles.value}>{user[0].name}</div>
+      </div>
+      <div className={styles.title}>
+        <div className={styles.value}>{user[0].email}</div>
+      </div>
+
+      {allProducts.map((item) => (
+        <Item item={item} />
+      ))}
+    </section>
+  );
 }

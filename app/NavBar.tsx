@@ -30,7 +30,7 @@ export default function NavBar() {
 
           <div className="flex gap-4 items-center">
             <Link
-              href={`/user/${session.data?.user?.id}`}
+              href={`/users/${session.data?.user?.id}`}
               className="flex items-center gap-1"
             >
               <Image

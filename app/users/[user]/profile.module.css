@@ -1,27 +1,25 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    border:2px solid black;
-    width:50%;
-    margin: 0 auto;
-    height:500px;
-    border-radius:30px;
-    padding:20px;
-    /* justify-content: center; */
-    align-items:center;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 30px;
+  padding: 20px;
+  /* justify-content: center; */
+  align-items: center;
 }
-.title{
-    display: flex;
-    margin-top: 5px;
+.title {
+  display: flex;
+  margin-top: 5px;
 }
-.profileImg{
-    width:200px;
-    height:200px;
-    border-radius:50%;
+.profileImg {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
 }
-.transactions{
-    border: 2px solid black;
-    width:100%;
-    margin: 20px 0;
+.transactions {
+  border: 2px solid black;
+  width: 100%;
+  margin: 20px 0;
 }
