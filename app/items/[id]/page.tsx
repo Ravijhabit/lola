@@ -30,7 +30,7 @@ export default async function Item(props: IAppProps) {
     .where(eq(reviews.product, product[0].id));
 
   return (
-    <section className={styles.item}>
+    <main className={styles.item}>
       <section className={styles.productDetails}>
         {/* Hero Image */}
         <div className="w-full relative">
@@ -56,6 +56,6 @@ export default async function Item(props: IAppProps) {
         {/* send reviews as a parameter */}
         <Reviews reviews={allReviews} />
       </section>
-    </section>
+    </main>
   );
 }
