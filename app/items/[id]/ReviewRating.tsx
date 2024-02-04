@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import toast from "react-hot-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./page.module.css";
 
@@ -24,7 +25,8 @@ const ReviewRating = ({ id }: { id: string }) => {
         product: id,
       })
       .catch((error) => {
-        console.log("negative response: ", error);
+        toast(error.response.data.message)
+        // console.log("negative response: ", error);
       });
   };
 

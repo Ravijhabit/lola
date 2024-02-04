@@ -3,7 +3,7 @@
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import type { ReactNode } from "react";
-// import { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 const Providers = ({
   session,
@@ -18,7 +18,7 @@ const Providers = ({
       // refetchOnWindowFocus
       session={session}
     >
-      {/* <Toaster position="bottom-right" /> */}
+      <Toaster position="bottom-right" />
       {children}
     </SessionProvider>
   );

@@ -7,6 +7,7 @@ import ChatComponent from "./ChatComponent";
 import ProductDescription from "./ProductDescription";
 import ReviewRating from "./ReviewRating";
 import styles from "./page.module.css";
+import toast from "react-hot-toast";
 
 export default function Controller({
   id,
@@ -57,12 +58,19 @@ export default function Controller({
   };
 
   async function handleTnx() {
+    try{
+
     const res = await axios.post("/api/transaction", {
       product: id,
       rentedTill: rentTill,
       rentedFrom: rentFrom,
     });
+    toast.success(res.data.message)
   }
+catch(e){
+    toast.error(e.response.data.message)
+  }
+}
 
   return (
     <section className={styles.controller}>
