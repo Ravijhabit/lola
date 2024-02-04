@@ -34,11 +34,11 @@ export async function POST(request: Request) {
         { status: 404 }
       );
 
-    // if (productExists.seller === session.user.id)
-    //   return NextResponse.json(
-    //     { message: "You cannot transact your own product", success: false },
-    //     { status: 403 }
-    //   );
+    if (productExists.seller === session.user.id)
+      return NextResponse.json(
+        { message: "You cannot transact your own product", success: false },
+        { status: 403 }
+      );
 
     await db
       .update(products)
