@@ -1,5 +1,5 @@
 import db from "@/db";
-import { history, products, reviews } from "@/db/schema";
+import { products, reviews } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -35,23 +35,29 @@ export async function POST(request: Request) {
         { status: 404 }
       );
 
+    if (productExists.seller === session.user.id)
+      return NextResponse.json(
+        { message: "You cannot review your own product", success: false },
+        { status: 403 }
+      );
+
     if (rating < 0 || rating > 5)
       return NextResponse.json(
         { message: "Rating should be between 0 and 5", success: false },
         { status: 422 }
       );
 
-    const historyExists = await db
+    const reviewExists = await db
       .select()
-      .from(history)
+      .from(reviews)
       .where(
         and(
-          eq(history.product, productExists.id),
-          eq(history.buyer, session.user.id)
+          eq(reviews.product, productExists.id),
+          eq(reviews.buyer, session.user.id)
         )
       );
 
-    if (historyExists.length)
+    if (reviewExists.length)
       return NextResponse.json(
         { message: "You have already reviewed this product", success: false },
         { status: 403 }
