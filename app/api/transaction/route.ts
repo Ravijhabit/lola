@@ -1,5 +1,5 @@
 import db from "@/db";
-import { products } from "@/db/schema";
+import { history, products } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -22,15 +22,15 @@ export async function POST(request: Request) {
 
     const data = await request.json();
 
-    const { product, rentedTill } = data;
+    const { product, myProduct, rentedFrom, rentedTill } = data;
 
     const productExists = await db.query.products.findFirst({
       where: eq(products.id, product),
     });
 
-    if (!productExists)
+    if (!productExists?.id)
       return NextResponse.json(
-        { message: "Product does not exist", success: false },
+        { message: "Selected product does not exist", success: false },
         { status: 404 }
       );
 
@@ -40,15 +40,65 @@ export async function POST(request: Request) {
         { status: 403 }
       );
 
-    await db
-      .update(products)
-      .set({ rentedTill })
-      .where(eq(products.id, product));
+    if (product.type === "rent") {
+      if (
+        productExists.rentedTill &&
+        new Date(productExists.rentedTill) > new Date()
+      )
+        return NextResponse.json(
+          { message: "Selected product is already rented", success: false },
+          { status: 403 }
+        );
 
-    return NextResponse.json({
-      message: "Successful",
-      success: true,
-    });
+      await db
+        .update(products)
+        .set({ rentedTill })
+        .where(eq(products.id, product));
+
+      await db.insert(history).values({
+        product,
+        buyer: session.user.id,
+        rentedFrom,
+        rentedTill,
+      });
+
+      return NextResponse.json({
+        message: "Successful",
+        success: true,
+      });
+    }
+
+    if (product.type === "trade") {
+      const myProductExists = await db.query.products.findFirst({
+        where: eq(products.id, myProduct),
+      });
+
+      if (!myProductExists?.id)
+        return NextResponse.json(
+          { message: "Your product does not exist", success: false },
+          { status: 404 }
+        );
+
+      await db
+        .update(products)
+        .set({ bartered: true, seller: session.user.id })
+        .where(eq(products.id, product));
+
+      await db
+        .update(products)
+        .set({ bartered: true, seller: productExists.seller })
+        .where(eq(products.id, myProduct));
+
+      return NextResponse.json({
+        message: "Successful",
+        success: true,
+      });
+    }
+
+    return NextResponse.json(
+      { message: "Invalid product type", success: false },
+      { status: 422 }
+    );
   } catch (e: unknown) {
     return NextResponse.json(
       {

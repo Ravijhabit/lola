@@ -59,6 +59,7 @@ export default function Controller({
     const res = await axios.post("/api/transaction", {
       product: id,
       rentedTill: rentTill,
+      rentedFrom: rentFrom,
     });
   }
 

@@ -1,6 +1,7 @@
 import type { AdapterAccount } from "@auth/core/adapters";
 import { createId } from "@paralleldrive/cuid2";
 import {
+  boolean,
   date,
   integer,
   pgEnum,
@@ -85,6 +86,7 @@ export const products = pgTable("product", {
   seller: text("seller")
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
+  bartered: boolean("bartered").default(false),
 });
 export type SelectProducts = typeof products.$inferSelect;
 
@@ -99,6 +101,8 @@ export const history = pgTable("history", {
   buyer: text("buyer")
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
+  rentedFrom: date("rentedFrom", { mode: "string" }).notNull(),
+  rentedTill: date("rentedTill", { mode: "string" }).notNull(),
 });
 
 export const reviews = pgTable("review", {

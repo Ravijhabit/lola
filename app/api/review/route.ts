@@ -1,6 +1,6 @@
 import db from "@/db";
-import { products, reviews } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { history, products, reviews } from "@/db/schema";
+import { and, eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
@@ -39,6 +39,22 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { message: "Rating should be between 0 and 5", success: false },
         { status: 422 }
+      );
+
+    const historyExists = await db
+      .select()
+      .from(history)
+      .where(
+        and(
+          eq(history.product, productExists.id),
+          eq(history.buyer, session.user.id)
+        )
+      );
+
+    if (historyExists.length)
+      return NextResponse.json(
+        { message: "You have already reviewed this product", success: false },
+        { status: 403 }
       );
 
     await db.insert(reviews).values({
