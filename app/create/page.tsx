@@ -3,6 +3,7 @@
 import { UploadButton } from "@/utils/uploadthing";
 import "@uploadthing/react/styles.css";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./form.module.css";
@@ -29,6 +30,8 @@ type ProductInputs = {
 };
 
 export default function App() {
+  const router = useRouter();
+
   const [image, setImage] = useState<string>("");
   const [imageFile, setImageFile] = useState<string>("");
   const [imageError, setImageError] = useState<boolean>(false);
@@ -50,13 +53,18 @@ export default function App() {
         ...data,
         image,
       })
+      .then((res) => {
+        const productId = res.data.productId;
+
+        router.push(`/items/${productId}`);
+      })
       .catch((error) => {
         console.log("negative response: ", error);
       });
   };
 
   return (
-    <section className={styles.form}>
+    <main className={styles.form}>
       <h1
         style={{
           textAlign: "center",
@@ -144,6 +152,6 @@ export default function App() {
           Submit
         </button>
       </form>
-    </section>
+    </main>
   );
 }

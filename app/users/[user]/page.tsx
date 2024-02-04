@@ -20,7 +20,7 @@ export default async function Profile(props: ProfileProps) {
     .where(eq(products.seller, user[0].id));
 
   return (
-    <section className={styles.container}>
+    <main className={styles.container}>
       <Image
         src={user[0].image}
         alt={user[0].name}
@@ -38,6 +38,6 @@ export default async function Profile(props: ProfileProps) {
       {allProducts.map((item) => (
         <Item item={item} />
       ))}
-    </section>
+    </main>
   );
 }
