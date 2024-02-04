@@ -37,6 +37,7 @@ export default function App() {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset
 	} = useForm<ProductInputs>();
 
 	const onSubmit: SubmitHandler<ProductInputs> = (data) => {
@@ -53,6 +54,8 @@ export default function App() {
 			.catch((error) => {
 				console.log("negative response: ", error);
 			});
+		
+		reset();
 	};
 
 	return (

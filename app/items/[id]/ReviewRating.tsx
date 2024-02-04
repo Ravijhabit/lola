@@ -14,8 +14,7 @@ const ReviewRating = ({ id }: { id: string }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<ReviewInputs>();
+    formState: { errors },reset  } = useForm<ReviewInputs>();
 
   const onSubmit: SubmitHandler<ReviewInputs> = (data) => {
     axios
@@ -26,6 +25,7 @@ const ReviewRating = ({ id }: { id: string }) => {
       .catch((error) => {
         console.log("negative response: ", error);
       });
+    reset();
   };
 
   return (

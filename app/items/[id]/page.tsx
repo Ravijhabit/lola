@@ -29,6 +29,11 @@ export default async function Item(props: IAppProps) {
     .from(reviews)
     .where(eq(reviews.product, product[0].id));
 
+    const userProducts = await db
+    .select()
+    .from(products)
+    .where(eq(products.seller, user[0].id));
+
   return (
     <section className={styles.item}>
       <section className={styles.productDetails}>
@@ -48,6 +53,7 @@ export default async function Item(props: IAppProps) {
           id={props.params.id}
           product={product[0]}
           seller={seller[0]}
+          userProducts={userProducts}
         />
       </section>
       {/* Review Section */}

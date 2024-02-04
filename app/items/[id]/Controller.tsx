@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import ChatComponent from "./ChatComponent";
 import ProductDescription from "./ProductDescription";
+import Trade from './Trade';
 import ReviewRating from "./ReviewRating";
 import styles from "./page.module.css";
 
@@ -12,6 +13,7 @@ export default function Controller({
   id,
   product,
   seller,
+  userProducts
 }: {
   id: string;
   product: SelectProducts;
@@ -69,15 +71,7 @@ export default function Controller({
       {/* Product Description and Buy/Negotiate button */}
       <ProductDescription product={product} seller={seller} />
       {product.type === "trade" ? (
-        <button
-          type="button"
-          onClick={(event) => {
-            event.preventDefault();
-            setOpenChat(true);
-          }}
-        >
-          Negotiate
-        </button>
+          <Trade userProduct={userProducts} tradeProduct={product}/>
       ) : (
         <>
           {product?.rentedTill &&
