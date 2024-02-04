@@ -2,7 +2,7 @@ import db from "@/db";
 import { products } from "@/db/schema";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/authOptions";
 
 interface DrizzleError {
   message: string;

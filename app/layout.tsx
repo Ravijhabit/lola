@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import NavBar from "./NavBar";
 import Providers from "./Providers";
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "./api/auth/[...nextauth]/authOptions";
 import "./globals.css";
 
 export const metadata: Metadata = {

@@ -1,8 +1,9 @@
 import db from "@/db";
+import { products } from "@/db/schema";
 import Item from "./component/Item";
 
 export default async function Home() {
-  const items = await db.query.products.findMany({});
+  const items = await db.select().from(products);
 
   return (
     <>
