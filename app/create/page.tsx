@@ -60,6 +60,7 @@ export default function App() {
         router.push(`/items/${productId}`);
       })
       .catch((error) => {
+        toast.error(error.response.data.message);
         console.log("negative response: ", error);
       });
   };
