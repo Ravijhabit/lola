@@ -1,15 +1,14 @@
 import db from "@/db";
-import { products } from "@/db/schema";
-import ItemList from "./component/ItemList";
+import Item from "./component/Item";
 
 export default async function Home() {
-  const items = await db.select().from(products);
+  const items = await db.query.products.findMany({});
 
   return (
     <>
-      <main className="card-group">
+      <main className="flex justify-center items-center gap-3 flex-wrap">
         {items.map((item) => (
-          <ItemList item={item} />
+          <Item item={item} key={item.id} />
         ))}
       </main>
     </>
