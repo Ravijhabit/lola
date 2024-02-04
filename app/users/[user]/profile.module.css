@@ -19,7 +19,7 @@
   border-radius: 50%;
 }
 .transactions {
-  border: 2px solid black;
+  /* border: 2px solid black; */
   width: 100%;
   margin: 20px 0;
 }
