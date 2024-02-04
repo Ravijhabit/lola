@@ -34,13 +34,13 @@ export async function POST(request: Request) {
         { status: 404 }
       );
 
-    // if (productExists.seller === session.user.id)
-    //   return NextResponse.json(
-    //     { message: "You cannot transact your own product", success: false },
-    //     { status: 403 }
-    //   );
+    if (productExists.seller === session.user.id)
+      return NextResponse.json(
+        { message: "You cannot transact your own product", success: false },
+        { status: 403 }
+      );
 
-    if (product.type === "rent") {
+    if (productExists.type === "rent") {
       if (
         productExists.rentedTill &&
         new Date(productExists.rentedTill) > new Date()
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
       });
     }
 
-    if (product.type === "trade") {
+    if (productExists.type === "trade") {
       const myProductExists = await db.query.products.findFirst({
         where: eq(products.id, myProduct),
       });
