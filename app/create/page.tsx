@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./form.module.css";
+import toast from "react-hot-toast";
 
 enum enumType {
   rent = "rent",
@@ -55,7 +56,7 @@ export default function App() {
       })
       .then((res) => {
         const productId = res.data.productId;
-
+        toast.success(res.data.message);
         router.push(`/items/${productId}`);
       })
       .catch((error) => {
