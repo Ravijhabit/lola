@@ -36,7 +36,6 @@ export default function App() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm<ProductInputs>();
 
   const onSubmit: SubmitHandler<ProductInputs> = (data) => {
