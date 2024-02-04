@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
-import styles from './page.module.css'
+import styles from "./page.module.css";
 
 type ReviewInputs = {
   rating: number;
@@ -10,7 +10,7 @@ type ReviewInputs = {
 };
 
 // reviewRating
-const ReviewRating = ({ id, setShowRating }: { id: string, setShowRating: Function }) => {
+const ReviewRating = ({ id }: { id: string }) => {
   const {
     register,
     handleSubmit,
@@ -31,9 +31,7 @@ const ReviewRating = ({ id, setShowRating }: { id: string, setShowRating: Functi
   return (
     // <section className={styles.reviews}>
     // {/* "handleSubmit" will validate your inputs before invoking "onSubmit"  */}
-    <form className={styles.reviewForm} onSubmit={
-        handleSubmit(onSubmit)
-        }>
+    <form className={styles.reviewForm} onSubmit={handleSubmit(onSubmit)}>
       {/* Rating of the item */}
       <label>Rating: </label>
       <select {...register("rating", { required: true })}>
@@ -62,7 +60,7 @@ const ReviewRating = ({ id, setShowRating }: { id: string, setShowRating: Functi
         })}
       />
       {errors.review?.message ? <span>{errors.review?.message}</span> : null}
-      <input className={['btn','btn-primary', styles.submitButton].join(' ')} type="submit" />
+      <input type="submit" />
     </form>
     // </section>
   );

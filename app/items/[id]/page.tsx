@@ -1,40 +1,62 @@
-"use client"
-import { useState } from "react";
-import styles from "./page.module.css";
+import db from "@/db";
+import { products, reviews, users } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import Image from "next/image";
 import Controller from "./Controller";
-import Reviews from "./Reviews";
 import ReviewRating from "./ReviewRating";
+import Reviews from "./Reviews";
+import styles from "./page.module.css";
+
 export interface IAppProps {
-	params: { id: string };
+  params: { id: string };
 }
 
-// individual item for rental - Longer description
-export default function Item(props: IAppProps) {
-	const [showRating, setShowRating] = useState(false);
-	return (
-		<section className={styles.item}>
-			<section className={styles.productDetails}>
-				{/* Hero Image */}
-				<img
-					className={styles.heroImage}
-					src="https://imageio.forbes.com/specials-images/imageserve/5d95d03767dd830006a295b6/GETTY/960x0.jpg?format=jpg&width=960"
-					alt="heroImage"
-				/>
-				{/* Controller showing detais -> reason of passing is we want server component here. To make an api call and showcase the product that is selected. */}
-				{/* Product  */}
-				<Controller id={props.params.id} />
-			</section>
-			{/* Review Section */}
-			<section className={styles.review}>
-				<div className={styles.heading}>Review</div>
+export default async function Item(props: IAppProps) {
+  // TODO: Handle product/seller not found
+
+  const product = await db
+    .select()
+    .from(products)
+    .where(eq(products.id, props.params.id));
+
+  const seller = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, product[0].seller));
+
+  const allReviews = await db
+    .select()
+    .from(reviews)
+    .where(eq(reviews.product, product[0].id));
+
+  return (
+    <section className={styles.item}>
+      <section className={styles.productDetails}>
+        {/* Hero Image */}
+        <div className="w-full relative">
+          <Image
+            src={product[0].image}
+            alt={product[0].name}
+            objectFit="cover"
+            fill
+            className="w-full h-[50vh] object-cover"
+          />
+        </div>
+        {/* Controller showing detais -> reason of passing is we want server component here. To make an api call and showcase the product that is selected. */}
+        {/* Product  */}
+        <Controller
+          id={props.params.id}
+          product={product[0]}
+          seller={seller[0]}
+        />
+      </section>
+      {/* Review Section */}
+      <section className={styles.review}>
+        <div className={styles.heading}>Review</div>
         {/* send reviews as a parameter */}
-				<Reviews reviews={[]}/>
-				{showRating ? (
-					<ReviewRating id={props.params.id} setShowRating={setShowRating}/>
-				) : (
-					<button type="button" className="btn btn-primary" onClick={() => setShowRating(true)}>Add Review</button>
-				)}
-			</section>
-		</section>
-	);
+        <Reviews reviews={allReviews} />
+        <ReviewRating id={props.params.id} />
+      </section>
+    </section>
+  );
 }

@@ -1,15 +1,15 @@
-"use client"
+"use client";
+import { Chatbox, Session } from "@talkjs/react";
 import { useCallback } from "react";
 import Talk from "talkjs";
-import { Session, Chatbox } from "@talkjs/react";
 import { Users } from "../../component/constant";
 
-function ChatComponent({sellerId}:{sellerId: string}) {
+function ChatComponent({ sellerId }: { sellerId: string }) {
   const syncUser = useCallback(
     () =>
-    // this is the user
+      // this is the user
       new Talk.User(Users[0]),
-    [],
+    []
   );
 
   const syncConversation = useCallback((session) => {
@@ -24,7 +24,7 @@ function ChatComponent({sellerId}:{sellerId: string}) {
   }, []);
 
   return (
-    <Session appId={process.env.NEXT_PUBLIC_APP_ID} syncUser={syncUser} >
+    <Session appId={process.env.NEXT_PUBLIC_APP_ID} syncUser={syncUser}>
       <Chatbox
         syncConversation={syncConversation}
         style={{ width: "100%", height: "500px" }}

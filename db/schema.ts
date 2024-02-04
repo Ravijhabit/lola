@@ -115,3 +115,4 @@ export const reviews = pgTable("review", {
   rating: integer("rating").default(0),
   review: text("review").notNull(),
 });
+export type SelectReviews = typeof reviews.$inferSelect;
