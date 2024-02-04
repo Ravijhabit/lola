@@ -3,7 +3,7 @@ import { products, reviews, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
 import Controller from "./Controller";
-import ReviewRating from "./ReviewRating";
+// import ReviewRating from "./ReviewRating";
 import Reviews from "./Reviews";
 import styles from "./page.module.css";
 
@@ -51,11 +51,10 @@ export default async function Item(props: IAppProps) {
         />
       </section>
       {/* Review Section */}
-      <section className={styles.review}>
-        <div className={styles.heading}>Review</div>
+      <section className={styles.reviews}>
+        <div className={styles.heading}>Reviews</div>
         {/* send reviews as a parameter */}
         <Reviews reviews={allReviews} />
-        <ReviewRating id={props.params.id} />
       </section>
     </section>
   );

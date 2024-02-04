@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import ChatComponent from "./ChatComponent";
 import ProductDescription from "./ProductDescription";
+import ReviewRating from "./ReviewRating";
 import styles from "./page.module.css";
 
 export default function Controller({
@@ -119,6 +120,7 @@ export default function Controller({
           <ChatComponent sellerId={product.seller} />
         </section>
       ) : null}
+      <ReviewRating id={id}/>
     </section>
   );
 }

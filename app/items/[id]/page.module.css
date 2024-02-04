@@ -11,6 +11,9 @@
 /* contains product details */
 .productDetails {
   display: flex;
+  height:fit-content;
+  border: 2px solid black;
+  padding:20px;
 }
 /* top part of the product */
 .heroImage,
@@ -33,13 +36,24 @@
   padding: 16px;
 }
 
-.review {
-  padding: 16px;
+.review,.comments {
+  padding: 8px;
+  /* border:2px solid black; */
+  display: flex;
+  width:70%;
+  align-items: center;
+}
+.review{
+  justify-content: space-between;
 }
 
+.userInfo{
+  display: flex;
+  gap:8px;
+}
 .reviewForm {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   width: fit-content;
 }
 

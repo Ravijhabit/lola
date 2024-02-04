@@ -9,7 +9,7 @@ export default async function Reviews({
   reviews: SelectReviews[];
 }) {
   return (
-    <section className={styles.review}>
+    <section className={styles.reviewContainer}>
       {reviews?.map(async (review) => {
         const user = await db
           .select()
@@ -18,6 +18,7 @@ export default async function Reviews({
 
         return (
           <section key={review.id} className={styles.review}>
+            <div className={styles.userInfo}>
             <Image
               width={30}
               height={30}
@@ -25,10 +26,13 @@ export default async function Reviews({
               alt={user[0].name}
               className="rounded-full"
             />
-            {user[0].name}
+            {user[0].name}:
+            </div>
+            <div className={styles.comments}>
             {/* comment */}
-            <p>{review.rating}</p>
+            <p>{review.rating} Stars - </p>
             <p>{review.review}</p>
+            </div>
           </section>
         );
       })}
