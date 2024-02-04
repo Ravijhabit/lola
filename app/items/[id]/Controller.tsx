@@ -1,14 +1,12 @@
 "use client";
 
-import ChatComponent from "@/app/component/chat/page";
 import { useState } from "react";
 // import { HiMiniMinusCircle } from "react-icons/hi2";
-import ProductDescription from "./ProductDescription";
 // import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import axios from "axios";
+import ChatComponent from "./ChatComponent";
 // components
 import ProductDescription from "./ProductDescription";
-import ChatComponent from "@/app/items/[id]/ChatComponent";
 // styles
 import styles from "./page.module.css";
 
