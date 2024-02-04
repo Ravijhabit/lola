@@ -1,5 +1,6 @@
 import type { AdapterAccount } from "@auth/core/adapters";
 import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
 import {
   boolean,
   date,
@@ -88,6 +89,12 @@ export const products = pgTable("product", {
     .notNull(),
   bartered: boolean("bartered").default(false),
 });
+export const productsRelations = relations(products, ({ one }) => ({
+  seller: one(users, {
+    fields: [products.seller],
+    references: [users.id],
+  }),
+}));
 export type SelectProducts = typeof products.$inferSelect;
 
 export const history = pgTable("history", {

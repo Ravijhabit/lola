@@ -22,8 +22,8 @@ export default async function Profile(props: ProfileProps) {
   return (
     <main className={styles.container}>
       <Image
-        src={user[0].image}
-        alt={user[0].name}
+        src={user[0].image ?? ""}
+        alt={user[0].name ?? ""}
         width={100}
         height={100}
         className="rounded-full"

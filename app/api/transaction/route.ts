@@ -22,7 +22,17 @@ export async function POST(request: Request) {
 
     const data = await request.json();
 
-    const { product, myProduct, rentedFrom, rentedTill } = data;
+    const {
+      product,
+      myProduct,
+      rentedFrom,
+      rentedTill,
+    }: {
+      product: string;
+      myProduct: string;
+      rentedFrom: string;
+      rentedTill: string;
+    } = data;
 
     const productExists = await db.query.products.findFirst({
       where: eq(products.id, product),

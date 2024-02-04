@@ -19,19 +19,19 @@ export default async function Reviews({
         return (
           <section key={review.id} className={styles.review}>
             <div className={styles.userInfo}>
-            <Image
-              width={30}
-              height={30}
-              src={user[0].image}
-              alt={user[0].name}
-              className="rounded-full"
-            />
-            {user[0].name}:
+              <Image
+                width={30}
+                height={30}
+                src={user[0].image ?? ""}
+                alt={user[0].name ?? ""}
+                className="rounded-full"
+              />
+              {user[0].name}:
             </div>
             <div className={styles.comments}>
-            {/* comment */}
-            <p>{review.rating} Stars - </p>
-            <p>{review.review}</p>
+              {/* comment */}
+              <p>{review.rating} Stars - </p>
+              <p>{review.review}</p>
             </div>
           </section>
         );

@@ -12,19 +12,22 @@ function ChatComponent({ sellerId }: { sellerId: string }) {
     []
   );
 
-  const syncConversation = useCallback((session) => {
-    // JavaScript SDK code here
-    const conversation = session.getOrCreateConversation("welcome");
-    // need to map another with the seller. (requires Seller Id)
-    const other = new Talk.User(Users[1]);
-    conversation.setParticipant(session.me);
-    conversation.setParticipant(other);
+  const syncConversation = useCallback(
+    (session: { getOrCreateConversation: (arg0: string) => any; me: any }) => {
+      // JavaScript SDK code here
+      const conversation = session.getOrCreateConversation("welcome");
+      // need to map another with the seller. (requires Seller Id)
+      const other = new Talk.User(Users[1]);
+      conversation.setParticipant(session.me);
+      conversation.setParticipant(other);
 
-    return conversation;
-  }, []);
+      return conversation;
+    },
+    []
+  );
 
   return (
-    <Session appId={process.env.NEXT_PUBLIC_APP_ID} syncUser={syncUser}>
+    <Session appId={process.env.NEXT_PUBLIC_APP_ID ?? ""} syncUser={syncUser}>
       <Chatbox
         syncConversation={syncConversation}
         style={{ width: "100%", height: "500px" }}

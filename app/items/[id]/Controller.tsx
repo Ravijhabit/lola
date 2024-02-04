@@ -1,13 +1,13 @@
 "use client";
 
 import { SelectProducts, SelectUsers } from "@/db/schema";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import ChatComponent from "./ChatComponent";
 import ProductDescription from "./ProductDescription";
 import ReviewRating from "./ReviewRating";
 import styles from "./page.module.css";
-import toast from "react-hot-toast";
 
 export default function Controller({
   id,
@@ -24,7 +24,7 @@ export default function Controller({
   );
   const [rentTill, setRentTill] = useState("");
 
-  const handleRentFromChange = (e) => {
+  const handleRentFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value;
     // Ensure that rentFrom is not before the current date
     if (selectedDate >= getCurrentDate()) {
@@ -32,7 +32,7 @@ export default function Controller({
     }
   };
 
-  const handleRentTillChange = (e) => {
+  const handleRentTillChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value;
     // Ensure that rentTill is not before rentFrom
     if (selectedDate >= rentFrom) {
@@ -58,19 +58,20 @@ export default function Controller({
   };
 
   async function handleTnx() {
-    try{
+    try {
+      const res = await axios.post("/api/transaction", {
+        product: id,
+        rentedTill: rentTill,
+        rentedFrom: rentFrom,
+      });
+      toast.success(res.data.message);
+    } catch (e) {
+      if (e instanceof AxiosError)
+        toast.error(e?.response?.data.message || "Some error occurred");
 
-    const res = await axios.post("/api/transaction", {
-      product: id,
-      rentedTill: rentTill,
-      rentedFrom: rentFrom,
-    });
-    toast.success(res.data.message)
+      toast.error("Some error occurred");
+    }
   }
-catch(e){
-    toast.error(e.response.data.message)
-  }
-}
 
   return (
     <section className={styles.controller}>
@@ -128,7 +129,7 @@ catch(e){
           <ChatComponent sellerId={product.seller} />
         </section>
       ) : null}
-      <ReviewRating id={id}/>
+      <ReviewRating id={id} />
     </section>
   );
 }

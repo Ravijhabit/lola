@@ -23,8 +23,8 @@ export default function ProductDescription({
         <h5>By: </h5>
         <Link href={`/users/${seller.id}`} className="flex gap-2 items-center">
           <Image
-            src={seller.image}
-            alt={seller.name}
+            src={seller.image ?? ""}
+            alt={seller.name ?? ""}
             width={40}
             height={40}
             className="rounded-full"

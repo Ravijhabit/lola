@@ -6,6 +6,7 @@ import db from "../../../../db";
 import { users } from "../../../../db/schema";
 
 export const authOptions: NextAuthOptions = {
+  // @ts-ignore: Not solvable issue with the adapter
   adapter: DrizzleAdapter(db),
   session: {
     strategy: "jwt",

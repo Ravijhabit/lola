@@ -1,10 +1,10 @@
 import db from "@/db";
-import { products, reviews, users } from "@/db/schema";
+import { reviews } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
 import Controller from "./Controller";
-// import ReviewRating from "./ReviewRating";
 import Reviews from "./Reviews";
+// import ReviewRating from "./ReviewRating";
 import styles from "./page.module.css";
 
 export interface IAppProps {
@@ -14,15 +14,14 @@ export interface IAppProps {
 export default async function Item(props: IAppProps) {
   // TODO: Handle product/seller not found
 
-  const product = await db
-    .select()
-    .from(products)
-    .where(eq(products.id, props.params.id));
+  const product = await db.query.products.findMany({
+    where: (products, { eq }) => eq(products.id, props.params.id),
+    with: {
+      seller: true,
+    },
+  });
 
-  const seller = await db
-    .select()
-    .from(users)
-    .where(eq(users.id, product[0].seller));
+  const seller = product[0].seller;
 
   const allReviews = await db
     .select()
@@ -44,11 +43,7 @@ export default async function Item(props: IAppProps) {
         </div>
         {/* Controller showing detais -> reason of passing is we want server component here. To make an api call and showcase the product that is selected. */}
         {/* Product  */}
-        <Controller
-          id={props.params.id}
-          product={product[0]}
-          seller={seller[0]}
-        />
+        <Controller id={props.params.id} product={product[0]} seller={seller} />
       </section>
       {/* Review Section */}
       <section className={styles.reviews}>

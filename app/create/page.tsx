@@ -6,8 +6,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import styles from "./form.module.css";
 import toast from "react-hot-toast";
+import styles from "./form.module.css";
 
 enum enumType {
   rent = "rent",
@@ -29,6 +29,11 @@ type ProductInputs = {
   tag: enumTag;
   type: enumType;
 };
+
+interface UploadResponse {
+  name: string;
+  url: string;
+}
 
 export default function App() {
   const router = useRouter();
@@ -90,7 +95,7 @@ export default function App() {
         {/* Image Url of the item */}
         <UploadButton
           endpoint="imageUploader"
-          onClientUploadComplete={(res: unknown) => {
+          onClientUploadComplete={(res: UploadResponse[]) => {
             setImageFile(res[0]?.name);
             setImage(res[0]?.url);
             setImageError(false);
