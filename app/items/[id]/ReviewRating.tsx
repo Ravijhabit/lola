@@ -29,8 +29,6 @@ const ReviewRating = ({ id }: { id: string }) => {
   };
 
   return (
-    // <section className={styles.reviews}>
-    // {/* "handleSubmit" will validate your inputs before invoking "onSubmit"  */}
     <form className={styles.reviewForm} onSubmit={handleSubmit(onSubmit)}>
       {/* Rating of the item */}
       <label>Rating: </label>
@@ -62,7 +60,6 @@ const ReviewRating = ({ id }: { id: string }) => {
       {errors.review?.message ? <span>{errors.review?.message}</span> : null}
       <input type="submit" />
     </form>
-    // </section>
   );
 };
 
