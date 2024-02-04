@@ -1,22 +1,49 @@
 /* individual product styles */
-.flex{
+.item{
     display: flex;
-    width:100vw;
-    height: 100vh;
+    flex-direction: column;
+    width:98vw;
+    height: 95vh;
+    padding: 40px;
+    border:2px solid black;
+    margin: auto auto;
 }
-.heroImage{
-    flex: 1
-}
+/* contains product details */
 .productDetails{
-    position: absolute;
-    right: 1.5rem;
-    top:50%;
+    display: flex;
 }
+/* top part of the product */
+.heroImage,.controller{
+    flex: 0.5;
+    height:65vh;    
+    min-width: 50%;
+    padding: 30px 0px 0 20px;
+}
+
+.box{
+    min-height: 3rem;
+    cursor: pointer;
+    padding:4px 20px;
+}
+
+.reviews{
+    display: flex;
+    flex-direction: column;
+    padding:16px;
+}
+
+.review{
+    padding:16px;
+}
+
+.reviewForm{
+    display: flex;
+    flex-direction: column;
+    width:fit-content
+}
+
 .selected{
     min-height:100px
-}
-.open{
-    width:40%;
 }
 
 /* chatHandler */
@@ -24,4 +51,21 @@
     position:absolute;
     bottom:0;
     right:20px;
+}
+
+
+
+.submitButton{
+    margin:8px 0;
+}
+
+.heading{
+    font-weight:bold;
+    width:90%;
+    display: flex;
+    justify-content: space-between;
+    /* padding:4px 20px; */
+}
+.productDescription{
+
 }

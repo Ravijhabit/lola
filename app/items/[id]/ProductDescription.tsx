@@ -1,6 +1,7 @@
+import styles from './page.module.css'
 export default function ProductDescription({stub}:{stub: any}){
     return(
-        <main>
+        <section className={styles.productDescription}>
             <h2>{stub?.productName}</h2>
             <h4>Description</h4>
             <br/>
@@ -10,6 +11,10 @@ export default function ProductDescription({stub}:{stub: any}){
             <strong>Price: {stub?.productPrice}</strong>
             <br/>
             <strong>Tag: </strong>{stub?.productTag}
-        </main>
+            <br/>
+            <br/>
+            <h5>Seller Information</h5>
+            <strong>{stub?.seller?.name}</strong>
+        </section>
     )
 }
