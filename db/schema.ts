@@ -79,7 +79,7 @@ export const products = pgTable("product", {
   price: integer("price").notNull(),
   description: text("description").notNull(),
   image: text("image").notNull(),
-  rentedTill: date("rentedTill", { mode: "date" }), // TODO: Considering all users are from Bharat. Need to handle timezones
+  rentedTill: date("rentedTill", { mode: "string" }), // TODO: Considering all users are from Bharat. Need to handle timezones
   type: typeEnum("type").notNull(),
   tag: tagEnum("tag").notNull(),
   seller: text("seller")
