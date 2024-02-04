@@ -73,7 +73,6 @@ export default function Controller({
           type="button"
           onClick={(event) => {
             event.preventDefault();
-            console.log("Negotiate");
             setOpenChat(true);
           }}
         >

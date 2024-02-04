@@ -11,7 +11,9 @@ export default function ProductDescription({
   return (
     <section className={styles.productDescription}>
       <h2 className="text-3xl font-bold">{product.name}</h2>
+      <br/>
       <p>{product.description}</p>
+      <br/>
       <p>Price: ${product.price}</p>
       <br />
       <strong>Tag: </strong>
