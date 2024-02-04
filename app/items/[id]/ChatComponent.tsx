@@ -2,7 +2,7 @@
 import { useCallback } from "react";
 import Talk from "talkjs";
 import { Session, Chatbox } from "@talkjs/react";
-import { Users } from "../constant";
+import { Users } from "../../component/constant";
 
 function ChatComponent({sellerId}:{sellerId: string}) {
   const syncUser = useCallback(
