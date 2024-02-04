@@ -78,8 +78,7 @@ export const products = pgTable("product", {
   name: text("name").notNull(),
   price: integer("price").notNull(),
   description: text("description").notNull(),
-  image: text("image"),
-  // numberOfRatings: integer("numberOfRatings").notNull(),
+  image: text("image").notNull(),
   rentedTill: date("rentedTill", { mode: "date" }), // TODO: Considering all users are from Bharat. Need to handle timezones
   type: typeEnum("type").notNull(),
   tag: tagEnum("tag").notNull(),
@@ -87,6 +86,7 @@ export const products = pgTable("product", {
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
 });
+export type SelectProducts = typeof products.$inferSelect;
 
 export const history = pgTable("history", {
   id: text("id")
